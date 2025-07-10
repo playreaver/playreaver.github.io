@@ -25,11 +25,11 @@ jobs:
       - name: Generate with _just
         uses: js-just/_just@main
         with:
-          path: .
+          path: re
       - name: Upload artifact
         uses: actions/upload-pages-artifact@v3
         with:
-          path: .
+          path: re
 
   deploy:
     environment:
