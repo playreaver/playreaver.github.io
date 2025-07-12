@@ -3,6 +3,7 @@ module.exports = {
     docs_config: {
         metatitle: "DevSpaace - How to upload app",
         domain: "devspace.reaver.is-a.dev",
-        usePathInput: true
+        usePathInputInHTML: true,
+        usePathInputInJS: true
     }
 }
