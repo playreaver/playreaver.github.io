@@ -18,14 +18,14 @@ jobs:
       - name: Generate with _just
         uses: js-just/_just@main
         with:
-          path: re
+          path: docs
       - uses: actions/setup-node@v4
       - name: Commit
         uses: cpina/github-action-push-to-another-repository@main
         env:
           API_TOKEN_GITHUB: ${{ secrets.API_TOKEN_GITHUB }}
         with:
-          source-directory: "re"
+          source-directory: "docs"
           destination-github-username: playreaver
           destination-repository-name: docs
           user-email: "reaver.entertainment@hotmail.com"
