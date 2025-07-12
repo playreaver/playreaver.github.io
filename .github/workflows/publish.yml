@@ -1,18 +1,13 @@
-name: Website
+name: Docs website
 
 on:
   push:
-    branches: ["main"]
+    branches: [main]
   workflow_dispatch:
 
-permissions:
-  contents: read
-  pages: write
-  id-token: write
-
 concurrency:
-  group: "pages"
-  cancel-in-progress: false
+  group: ${{ github.ref }}-docs-website
+  cancel-in-progress: true
 
 jobs:
   build:
@@ -20,24 +15,19 @@ jobs:
     steps:
       - name: Checkout
         uses: actions/checkout@v4
-      - name: Setup Pages
-        uses: actions/configure-pages@v5
       - name: Generate with _just
         uses: js-just/_just@main
         with:
           path: re
-      - name: Upload artifact
-        uses: actions/upload-pages-artifact@v3
+      - uses: actions/setup-node@v4
+      - name: Commit
+        uses: cpina/github-action-push-to-another-repository@main
+        env:
+          API_TOKEN_GITHUB: ${{ secrets.API_TOKEN_GITHUB }}
         with:
-          path: re
-
-  deploy:
-    environment:
-      name: github-pages
-      url: ${{ steps.deployment.outputs.page_url }}
-    runs-on: ubuntu-latest
-    needs: build
-    steps:
-      - name: Deploy to GitHub Pages
-        id: deployment
-        uses: actions/deploy-pages@v4
+          source-directory: "re"
+          destination-github-username: playreaver
+          destination-repository-name: docs
+          user-email: "reaver.entertainment@hotmail.com"
+          target-branch: main
+      
